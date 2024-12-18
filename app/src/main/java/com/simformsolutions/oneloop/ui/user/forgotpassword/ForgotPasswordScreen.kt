@@ -51,7 +51,6 @@ import com.simformsolutions.oneloop.ui.user.login.LoginUiState
 /**
  * ForgotPassword route to show UI.
  *
- * @param modifier The [Modifier]
  * @param viewModel The [ForgotPasswordViewModel] instance
  */
 @Composable
@@ -74,9 +73,7 @@ fun ForgotPasswordRoute(
 /**
  * Standalone screen to show ForgotPassword UI.
  *
- * @param viewModel The [ForgotPasswordViewModel] instance
  * @param uiState The [LoginUiState]
- * @param emailError The [String] parameter
  */
 @Composable
 private fun ForgotPasswordScreen(

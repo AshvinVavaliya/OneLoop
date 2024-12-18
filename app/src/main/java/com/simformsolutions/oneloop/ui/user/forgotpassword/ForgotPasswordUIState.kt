@@ -9,7 +9,6 @@ import com.simformsolutions.oneloop.domain.model.User
 /**
  * Defines ui state for [ForgotPasswordScreen]
  *
- * @param user The [User], null if not added the data
  * @param email The email of the user
  */
 @Stable

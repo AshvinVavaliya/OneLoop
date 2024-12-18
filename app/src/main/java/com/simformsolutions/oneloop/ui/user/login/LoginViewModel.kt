@@ -15,8 +15,6 @@ import javax.inject.Inject
 /**
  * The ViewModel for [LoginScreen]
  *
- * @param usersRepository The [UsersRepository] instance
- * @param ioDispatcher The IO coroutine dispatcher
  * @param navigator The [Navigator] instance
  */
 @HiltViewModel
@@ -54,7 +52,7 @@ class LoginViewModel @Inject constructor(
     }
 
     // Function to validate the email
-    fun validateEmail(email: String) {
+    fun validateInput(email: String) {
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

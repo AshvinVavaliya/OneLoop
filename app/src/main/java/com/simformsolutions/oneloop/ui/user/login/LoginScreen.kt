@@ -57,16 +57,14 @@ fun LoginRoute(
         onForgotPasswordClick = viewModel::onForgotPasswordClick,
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
-        validateEmail = viewModel::validateEmail
+        validateInput = viewModel::validateInput
     )
 }
 
 /**
  * Standalone screen to show login UI.
  *
- * @param modifier The [Modifier]
  * @param uiState The [LoginUiState]
- * @param emailError The [String] parameter
  */
 @Composable
 private fun LoginScreen(
@@ -74,7 +72,7 @@ private fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    validateEmail: (String) -> Unit
+    validateInput: (String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -215,7 +213,7 @@ private fun LoginScreen(
                         .padding(dimensionResource(id = R.dimen.dp_20)),
                     contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.dp_15)),
                     enabled = uiState.isValidInput,
-                    onClick = { validateEmail(uiState.email) }
+                    onClick = { validateInput(uiState.email) }
                 ) {
                     AppText(
                         text = stringResource(R.string.btn_sign_in),
@@ -332,7 +330,7 @@ private fun LoginScreenPreview() {
             onForgotPasswordClick = {},
             onEmailChange = {},
             onPasswordChange = {},
-            validateEmail = {}
+            validateInput = {}
         )
     }
 }
@@ -347,7 +345,7 @@ private fun LoadingLoginScreenPreview() {
             onForgotPasswordClick = {},
             onEmailChange = {},
             onPasswordChange = {},
-            validateEmail = {}
+            validateInput = {}
         )
     }
 }

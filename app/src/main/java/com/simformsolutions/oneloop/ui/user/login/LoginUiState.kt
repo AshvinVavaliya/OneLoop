@@ -4,12 +4,10 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.simformsolutions.oneloop.R
-import com.simformsolutions.oneloop.domain.model.User
 
 /**
  * Defines ui state for [LoginScreen]
  *
- * @param user The [User], null if not added the data
  * @param email The email of the user
  * @param password The password of the user
  */

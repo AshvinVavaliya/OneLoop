@@ -20,7 +20,6 @@ import javax.inject.Inject
 /**
  * The ViewModel for [ForgotPassword]
  *
- * @param ioDispatcher The IO coroutine dispatcher
  * @param navigator The [Navigator] instance
  */
 @HiltViewModel
