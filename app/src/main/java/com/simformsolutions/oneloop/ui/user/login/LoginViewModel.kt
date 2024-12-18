@@ -3,7 +3,6 @@ package com.simformsolutions.oneloop.ui.user.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simform.navigation.Navigator
-import com.simformsolutions.oneloop.domain.repository.UsersRepository
 import com.simformsolutions.oneloop.ui.user.navigation.ForgotPassword
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,9 +23,7 @@ class LoginViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(getDefaultUiState())
     val uiState = _uiState.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Lazily,
-        initialValue = getDefaultUiState()
+        scope = viewModelScope, started = SharingStarted.Lazily, initialValue = getDefaultUiState()
     )
 
     fun onForgotPasswordClick() {
@@ -34,25 +31,22 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onEmailChange(email: String) {
-        _uiState
-            .update {
+        _uiState.update {
                 it.copy(
                     email = email
                 )
-        }
+            }
     }
 
     fun onPasswordChange(password: String) {
-        _uiState
-            .update {
+        _uiState.update {
                 it.copy(
                     password = password
                 )
-        }
+            }
     }
 
-    // Function to validate the email
-    fun validateInput(email: String) {
+    fun signInClicked() {
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

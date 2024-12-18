@@ -14,4 +14,6 @@
     <string name="forgot_pass_for_email_address_field_hint">Email Address</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="password_is_required_validation">Password is required</string>
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="back">Back</string>
 </resources>

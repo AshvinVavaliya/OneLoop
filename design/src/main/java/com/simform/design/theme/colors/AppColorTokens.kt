@@ -23,6 +23,10 @@ object AppColorTokens {
         light = Color(0xFFFFFFFF),
         dark = Color(0xFFFFFFFF)
     )
+    val black = AppColorToken(
+        light = Color(0xFF000000),
+        dark = Color(0xFF000000)
+    )
     val textFieldContainerColor = AppColorToken(
         light = Color(0xFFF1F1FD),
         dark = Color(0xFF1E1844)
@@ -74,5 +78,9 @@ object AppColorTokens {
     val statusBarColor = AppColorToken(
         light = Color(0xFFFFFFFF),
         dark = Color(0xFF000000),
+    )
+    val transparentColor = AppColorToken(
+        light = Color(0x00FFFFFF),
+        dark = Color(0x00000000),
     )
 }

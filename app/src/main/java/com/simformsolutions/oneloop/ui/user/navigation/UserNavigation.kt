@@ -1,5 +1,8 @@
 package com.simformsolutions.oneloop.ui.user.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import com.simformsolutions.oneloop.ui.user.login.LoginRoute
 import com.simform.navigation.core.composable
@@ -15,11 +18,18 @@ fun NavGraphBuilder.userNavigation() {
             startDestination = Login::class
     ) {
         composable<Login> {
-            LoginRoute()
+            LoginRoute(modifier = Modifier
+                .fillMaxSize()
+                .imePadding()
+            )
         }
 
         composable<ForgotPassword> {
-            ForgotPasswordRoute()
+            ForgotPasswordRoute(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
+            )
         }
     }
 }

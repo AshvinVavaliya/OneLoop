@@ -1,20 +1,14 @@
 package com.simformsolutions.oneloop.ui.user.forgotpassword
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simform.navigation.Navigator
-import com.simformsolutions.oneloop.common.dispatcher.IoDispatcher
-import com.simformsolutions.oneloop.domain.model.User
 import com.simformsolutions.oneloop.ui.user.navigation.ForgotPassword
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -42,14 +36,13 @@ class ForgotPasswordViewModel @Inject constructor(
 
     fun onEmailChange(email: String) {
         _uiState.update {
-                it.copy(
-                    email = email
-                )
-            }
+            it.copy(
+                email = email
+            )
+        }
     }
 
-    // Function to validate the email
-    fun validateEmail(email: String) {
+    fun forgotPasswordClicked() {
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

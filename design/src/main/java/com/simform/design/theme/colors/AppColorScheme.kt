@@ -43,6 +43,8 @@ data class AppColorScheme(
     val ripple: Color,
     val bottomSheetScrim: Color,
     val statusBarColor: Color,
+    val transparentColor: Color,
+    val blackColor: Color,
 )
 
 /**
@@ -67,7 +69,9 @@ fun colorScheme(darkTheme: Boolean): AppColorScheme = with(darkTheme) {
         tabContainerColor = color(AppColorTokens.tabContainerColor),
         ripple = color(AppColorTokens.ripple),
         bottomSheetScrim = color(AppColorTokens.bottomSheetScrim),
-        statusBarColor = color(AppColorTokens.statusBarColor)
+        statusBarColor = color(AppColorTokens.statusBarColor),
+        transparentColor = color(AppColorTokens.transparentColor),
+        blackColor = color(AppColorTokens.black)
     )
 }
 

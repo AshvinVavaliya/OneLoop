@@ -3,14 +3,11 @@ package com.simformsolutions.oneloop.ui.user.forgotpassword
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -23,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -39,7 +36,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.simform.design.appbar.AppTopAppBar
 import com.simform.design.button.AppButton
 import com.simform.design.icon.AppIcon
-import com.simform.design.image.AppImage
 import com.simform.design.scaffold.AppScaffold
 import com.simform.design.text.AppText
 import com.simform.design.textfield.AppUnderlinedTextField
@@ -55,14 +51,15 @@ import com.simformsolutions.oneloop.ui.user.login.LoginUiState
  */
 @Composable
 fun ForgotPasswordRoute(
-    viewModel: ForgotPasswordViewModel = hiltViewModel()
+    modifier: Modifier, viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     ForgotPasswordScreen(
+        modifier = modifier,
         uiState = uiState,
         onEmailChange = viewModel::onEmailChange,
         onBackClick = viewModel::onBackClick,
-        validateEmail = viewModel::validateEmail
+        forgotPasswordClicked = viewModel::forgotPasswordClicked
     )
 
     BackHandler {
@@ -77,266 +74,150 @@ fun ForgotPasswordRoute(
  */
 @Composable
 private fun ForgotPasswordScreen(
+    modifier: Modifier,
     uiState: ForgotPasswordUIState,
-    onBackClick: () -> Unit, // New parameter for back click handling
+    onBackClick: () -> Unit,
     onEmailChange: (String) -> Unit,
-    validateEmail: (String) -> Unit
+    forgotPasswordClicked: () -> Unit
 ) {
     val context = LocalContext.current
 
-    AppScaffold(
-        modifier = Modifier.fillMaxWidth(),
-        containerColor = Color.Red,
-        topBar = {
-            AppTopAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                containerColor = Color.Black,
-                leadingContent = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                    ) {
-                        // Back button on the left side
-                        Row(modifier = Modifier
-                            .fillMaxHeight()
-                            .clickable {
-                                onBackClick() // Handle back click action here
-                            }
-                            .padding(
-                                start = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), end = dimensionResource(
-                                    id = R.dimen.dp_5
-                                )
-                            ),
-                            horizontalArrangement = Arrangement.Start,
-                            verticalAlignment = Alignment.CenterVertically) {
-                            AppIcon(
-                                modifier = Modifier.padding(
-                                    end = dimensionResource(
-                                        id = R.dimen.dp_5
-                                    )
-                                ),
-                                painter = painterResource(
-                                    id = R.drawable.icon_back_arrow
-                                ),
-                                contentDescription = "Back Icon"
-                            )
-
-                            AppText(
-                                text = "Back",
-                                textColor = AppTheme.appColorScheme.white
-                            )
+    AppScaffold(modifier = modifier.fillMaxWidth(), topBar = {
+        AppTopAppBar(modifier = Modifier.fillMaxWidth(),
+            containerColor = AppTheme.appColorScheme.blackColor,
+            centerContent = {
+                AppText(
+                    text = stringResource(R.string.forgot_password_title),
+                    textColor = AppTheme.appColorScheme.white
+                )
+            },
+            leadingContent = {
+                Row(
+                    modifier = Modifier
+                        .clickable {
+                            onBackClick()
                         }
+                        .padding(start = dimensionResource(R.dimen.common_space_10), end = dimensionResource(R.dimen.common_space_5)),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(
+                        modifier = Modifier.padding(end = dimensionResource(R.dimen.common_space_5)),
+                        painter = painterResource(
+                            id = R.drawable.icon_back_arrow
+                        )
+                    )
 
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(), // Ensure Box takes full height of the top bar
-                            contentAlignment = Alignment.Center // Center content horizontally and vertically
-                        ) {
-                            AppText(
-                                text = "Forgot Password", textColor = Color.White
-                            )
-                        }
-                    }
-                })
-        }
-    ) { innerPadding ->
-        Box(
+                    AppText(
+                        text = stringResource(R.string.back),
+                        textColor = AppTheme.appColorScheme.white
+                    )
+                }
+            })
+    }) { innerPadding ->
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .fillMaxWidth()
+                .paint(
+                    painter = painterResource(id = R.drawable.img_login_bg),
+                    contentScale = ContentScale.FillBounds
+                )
+                .verticalScroll(rememberScrollState())
+                .imePadding()
+                .padding(start = dimensionResource(id = R.dimen.main_contains_side_space), end = dimensionResource(id = R.dimen.main_contains_side_space)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            AppImage(
-                modifier = Modifier.fillMaxSize(),
-                placeholder = painterResource(R.drawable.img_login_bg),
-                url = "",
-                contentScale = ContentScale.FillBounds
+            AppIcon(
+                modifier = Modifier
+                    .padding(bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)),
+                painter = painterResource(id = R.drawable.icon_forgot_password)
             )
 
-            Box(
+            AppText(
                 modifier = Modifier
-                    .fillMaxSize() // Ensure Box takes up the full screen
-                    .background(Color.Transparent)
-                    .padding(
-                        start = dimensionResource(
-                            id = R.dimen.dp_25
-                        ), end = dimensionResource(
-                            id = R.dimen.dp_25
-                        )
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()) // Enable vertical scrolling
-                        .imePadding(), // Adjust layout for keyboard
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center // Vertically center the content
-                ) {
-                    AppImage(
-                        modifier = Modifier
-                            .padding(
-                                bottom = dimensionResource(
-                                    id = R.dimen.dp_20
-                                )
-                            ),
-                        placeholder = painterResource(
-                            id = R.drawable.icon_forgot_password
-                        ),
-                        url = ""
-                    )
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .padding(bottom = dimensionResource(R.dimen.common_space_10)),
+                text = stringResource(R.string.forgot_password),
+                textColor = AppTheme.appColorScheme.white,
+                style = LocalTextStyle.current.copy(
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
+                )
+            )
 
-                    AppText(
-                        modifier = Modifier
-                            .align(alignment = Alignment.CenterHorizontally)
-                            .padding(
-                                start = dimensionResource(id = R.dimen.dp_10),
-                                end = dimensionResource(id = R.dimen.dp_10),
-                                bottom = dimensionResource(id = R.dimen.dp_10)
-                            ),
-                        text = stringResource(R.string.forgot_password),
-                        textColor = Color.White,
-                        style = LocalTextStyle.current.copy(
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 22.sp // Set the desired font size here
-                        )
-                    )
+            AppText(
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .padding(bottom = dimensionResource(R.dimen.common_space_15)),
+                text = stringResource(R.string.note_of_forgot_password),
+                textColor = AppTheme.appColorScheme.textColor,
+                style = LocalTextStyle.current.copy(
+                    textAlign = TextAlign.Center
+                )
+            )
 
+            // Email TextField
+            AppUnderlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = uiState.email,
+                textStyle = AppTheme.appTypography.body1Normal.copy(color = AppTheme.appColorScheme.white),
+                supportingText = {
+                    if (uiState.isValidEmailError > 0) {
+                        AppText(text = stringResource(uiState.isValidEmailError), textColor = AppTheme.appColorScheme.error)
+                    }
+                },
+                placeholder = {
                     AppText(
-                        modifier = Modifier
-                            .align(alignment = Alignment.CenterHorizontally)
-                            .padding(
-                                start = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), end = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), bottom = dimensionResource(
-                                    id = R.dimen.dp_10
-                                )
-                            ),
-                        text = stringResource(R.string.note_of_forgot_password),
+                        text = stringResource(R.string.forgot_pass_for_email_address_field_hint),
                         textColor = AppTheme.appColorScheme.textColor,
-                        style = LocalTextStyle.current.copy(
-                            textAlign = TextAlign.Center
-                        )
                     )
-
-                    // Email TextField
-                    AppUnderlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = dimensionResource(id = R.dimen.dp_10),
-                                top = dimensionResource(id = R.dimen.dp_20),
-                                end = dimensionResource(id = R.dimen.dp_10)
-                            ), // Push the TextField content to the right to avoid icon overlap
-                        value = uiState.email,
-                        textStyle = AppTheme.appTypography.body1Normal.copy(
-                            color = AppTheme.appColorScheme.white
-                        ),
-                        supportingText = {
-                            val message = if (uiState.isValidEmailError > 0) {
-                                stringResource(uiState.isValidEmailError)
-                            } else {
-                                ""
-                            }
-                            AppText(text = message, textColor = AppTheme.appColorScheme.error)
-                        },
-                        placeholder = {
-                            AppText(
-                                text = stringResource(R.string.forgot_pass_for_email_address_field_hint),
-                                textColor = AppTheme.appColorScheme.textColor,
-                            )
-                        },
-                        onValueChange = onEmailChange,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            capitalization = KeyboardCapitalization.Words
-                        ),
-                        leadingIcon = {
-                            AppImage(
-                                modifier = Modifier
-                                    .padding(dimensionResource(
-                                        id = R.dimen.dp_5
-                                    )
-                                    ),
-                                placeholder = painterResource(
-                                    id = R.drawable.icon_email_field
-                                ),
-                                url = ""
-                            )
-                        }
+                },
+                onValueChange = onEmailChange,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    capitalization = KeyboardCapitalization.Words
+                ),
+                leadingIcon = {
+                    AppIcon(
+                        painter = painterResource(id = R.drawable.icon_email_field)
                     )
+                })
 
-                    AppButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), end = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), top = dimensionResource(
-                                    id = R.dimen.dp_30
-                                )
-                            ),
-                        enabled = uiState.isValidInput,
-                        contentPadding = PaddingValues(
-                            vertical = dimensionResource(
-                                id = R.dimen.dp_15
-                            ),
-                        ), onClick = {
-                            validateEmail(uiState.email)
-                        }
-                    ) {
-                        AppText(
-                            text = stringResource(R.string.btn_reset_password),
-                            textColor = AppTheme.appColorScheme.white,
-                        )
-                    }
+            AppButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = dimensionResource(id = R.dimen.login_and_forgot_pass_buttons_top_padding)),
+                enabled = uiState.isValidInput,
+                contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.app_bottom_content_padding)),
+                onClick = forgotPasswordClicked
+            ) {
+                AppText(
+                    text = stringResource(R.string.btn_reset_password),
+                    textColor = AppTheme.appColorScheme.white,
+                )
+            }
 
-                    // Sign Up prompt
-                    Row(
-                        modifier = Modifier.padding(
-                            top = dimensionResource(
-                                id = R.dimen.dp_10
-                            )
-                        )
-                    ) {
-                        AppText(
-                            modifier = Modifier.padding(
-                                top = dimensionResource(
-                                    id = R.dimen.dp_10
-                                ), bottom = dimensionResource(
-                                    id = R.dimen.dp_10
-                                )
-                            ),
-                            text = stringResource(R.string.don_t_have_an_account),
-                            textColor = AppTheme.appColorScheme.textColor,
-                        )
+            // Sign Up prompt
+            Row(
+                modifier = Modifier.padding(top = dimensionResource(R.dimen.common_space_10))
+            ) {
+                AppText(
+                    modifier = Modifier
+                        .padding(top = dimensionResource(R.dimen.common_space_10), bottom = dimensionResource(R.dimen.common_space_10)),
+                    text = stringResource(R.string.don_t_have_an_account),
+                    textColor = AppTheme.appColorScheme.textColor,
+                )
 
-                        AppText(
-                            modifier = Modifier
-                                .padding(
-                                    dimensionResource(
-                                        id = R.dimen.dp_10
-                                    )
-                                )
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT)
-                                        .show()
-                                },
-                            text = stringResource(R.string.sign_up),
-                            textColor = AppTheme.appColorScheme.white,
-                        )
-                    }
-                }
+                AppText(
+                    modifier = Modifier
+                        .padding(dimensionResource(R.dimen.common_space_10))
+                        .clickable {
+                            Toast.makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT).show()
+                        },
+                    text = stringResource(R.string.sign_up),
+                    textColor = AppTheme.appColorScheme.white,
+                )
             }
         }
     }
@@ -347,11 +228,10 @@ private fun ForgotPasswordScreen(
 @Composable
 private fun LoginScreenPreview() {
     AppPreviewTheme {
-        ForgotPasswordScreen(
+        ForgotPasswordScreen(modifier = Modifier.fillMaxSize(),
             uiState = ForgotPasswordUIState(email = ""),
             onEmailChange = {},
             onBackClick = {},
-            validateEmail = {}
-        )
+            forgotPasswordClicked = {})
     }
 }
