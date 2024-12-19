@@ -37,12 +37,14 @@ class ForgotPasswordViewModel @Inject constructor(
     fun onEmailChange(email: String) {
         _uiState.update {
             it.copy(
-                email = email
+                email = email,
+                isEmailChanged = true
             )
         }
     }
 
     fun forgotPasswordClicked() {
+        _uiState.value = _uiState.value.copy(isSubmitted = true)
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

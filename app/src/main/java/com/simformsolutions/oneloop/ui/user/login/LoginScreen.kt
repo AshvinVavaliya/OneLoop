@@ -209,7 +209,7 @@ private fun LoginScreen(
                 modifier = Modifier
                     .size(dimensionResource(id = R.dimen.social_media_buttons_size))
                     .clickable {
-                        Toast.makeText(context, "Facebook Icon Clicked", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Twitter Icon Clicked", Toast.LENGTH_SHORT).show()
                     },
                 painter = painterResource(id = R.drawable.icon_twitter)
             )
@@ -218,7 +218,7 @@ private fun LoginScreen(
                 modifier = Modifier
                     .size(dimensionResource(id = R.dimen.social_media_buttons_size))
                     .clickable {
-                        Toast.makeText(context, "Facebook Icon Clicked", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Apple Icon Clicked", Toast.LENGTH_SHORT).show()
                     },
                 painter = painterResource(id = R.drawable.icon_apple)
             )
@@ -252,7 +252,7 @@ private fun LoginScreen(
 private fun LoginScreenPreview() {
     AppPreviewTheme {
         LoginScreen(modifier = Modifier.fillMaxSize(),
-            uiState = LoginUiState(email = "", password = ""),
+            uiState = LoginUiState(),
             onForgotPasswordClick = {},
             onEmailChange = {},
             onPasswordChange = {},

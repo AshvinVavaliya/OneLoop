@@ -229,7 +229,7 @@ private fun ForgotPasswordScreen(
 private fun LoginScreenPreview() {
     AppPreviewTheme {
         ForgotPasswordScreen(modifier = Modifier.fillMaxSize(),
-            uiState = ForgotPasswordUIState(email = ""),
+            uiState = ForgotPasswordUIState(),
             onEmailChange = {},
             onBackClick = {},
             forgotPasswordClicked = {})

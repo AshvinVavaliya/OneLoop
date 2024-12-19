@@ -14,11 +14,17 @@ import com.simformsolutions.oneloop.R
 @Stable
 @Immutable
 data class LoginUiState(
-    val email: String = "", val password: String = ""
+    val email: String = "",
+    val password: String = "",
+    val isEmailChanged: Boolean = false, // Track if the email field has been changed
+    val isPasswordChanged: Boolean = false, // Track if the email field has been changed
+    val isSubmitted: Boolean = false // Track if the form has been submitted
 ) {
     @get:StringRes
     val isValidEmailError: Int
-        get() = if (email.isEmpty()) {
+        get() = if (!isEmailChanged && !isSubmitted) {
+            0
+        } else if (email.isEmpty()) {
             R.string.email_is_required_validation
         } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             R.string.enter_valid_email_address_validation
@@ -28,7 +34,9 @@ data class LoginUiState(
 
     @get:StringRes
     val isValidPasswordError: Int
-        get() = if (password.isEmpty()) {
+        get() = if (!isPasswordChanged && !isSubmitted) {
+            0
+        } else if (password.isEmpty()) {
             R.string.password_is_required_validation
         } else {
             0

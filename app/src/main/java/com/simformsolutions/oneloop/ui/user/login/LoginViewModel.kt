@@ -33,7 +33,8 @@ class LoginViewModel @Inject constructor(
     fun onEmailChange(email: String) {
         _uiState.update {
                 it.copy(
-                    email = email
+                    email = email,
+                    isEmailChanged = true
                 )
             }
     }
@@ -41,12 +42,14 @@ class LoginViewModel @Inject constructor(
     fun onPasswordChange(password: String) {
         _uiState.update {
                 it.copy(
-                    password = password
+                    password = password,
+                    isPasswordChanged = true
                 )
             }
     }
 
     fun signInClicked() {
+        _uiState.value = _uiState.value.copy(isSubmitted = true)
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }
