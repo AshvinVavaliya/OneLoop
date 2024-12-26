@@ -1,2 +1,1 @@
-# OneLoop
-It is only for jetpack compose learning purpose  
+# 1Loop

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_contains_side_space">30dp</dimen>
+    <dimen name="app_icons_bottom_space">40dp</dimen>
+    <dimen name="app_bottom_content_padding">15dp</dimen>
+    <dimen name="login_and_forgot_pass_buttons_top_padding">30dp</dimen>
+    <dimen name="social_media_buttons_space">16dp</dimen>
+    <dimen name="social_media_buttons_size">50dp</dimen>
+    <dimen name="common_space_very_small">5dp</dimen>
+    <dimen name="common_space_small">10dp</dimen>
+    <dimen name="common_space_medium">15dp</dimen>
+    <dimen name="social_media_login_info_space">30dp</dimen>
+</resources>
