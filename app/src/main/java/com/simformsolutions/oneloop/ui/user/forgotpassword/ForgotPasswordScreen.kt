@@ -45,6 +45,7 @@ import com.simformsolutions.oneloop.ui.user.login.LoginUiState
 /**
  * ForgotPassword route to show UI.
  *
+ * @param modifier The [Modifier]
  * @param viewModel The [ForgotPasswordViewModel] instance
  */
 @Composable
@@ -58,7 +59,8 @@ fun ForgotPasswordRoute(
         uiState = uiState,
         onEmailChange = viewModel::onEmailChange,
         onBackClick = viewModel::onBackClick,
-        forgotPasswordClicked = viewModel::forgotPasswordClicked
+        forgotPasswordClicked = viewModel::forgotPasswordClicked,
+        onSignUpClick = viewModel::onSignUpClick
     )
 
     BackHandler {
@@ -77,7 +79,8 @@ private fun ForgotPasswordScreen(
     uiState: ForgotPasswordUIState,
     onBackClick: () -> Unit,
     onEmailChange: (String) -> Unit,
-    forgotPasswordClicked: () -> Unit
+    forgotPasswordClicked: () -> Unit,
+    onSignUpClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -223,7 +226,7 @@ private fun ForgotPasswordScreen(
                     modifier = Modifier
                         .padding(dimensionResource(R.dimen.common_space_small))
                         .clickable {
-                            Toast.makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT).show()
+                            onSignUpClick()
                         },
                     text = stringResource(R.string.sign_up),
                     textColor = AppTheme.appColorScheme.white,
@@ -243,7 +246,8 @@ private fun LoginScreenPreview() {
             uiState = ForgotPasswordUIState(),
             onEmailChange = {},
             onBackClick = {},
-            forgotPasswordClicked = {}
+            forgotPasswordClicked = {},
+            onSignUpClick = {}
         )
     }
 }
