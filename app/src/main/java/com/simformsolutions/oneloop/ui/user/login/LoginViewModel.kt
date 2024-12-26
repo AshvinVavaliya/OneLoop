@@ -23,7 +23,9 @@ class LoginViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(getDefaultUiState())
     val uiState = _uiState.stateIn(
-        scope = viewModelScope, started = SharingStarted.Lazily, initialValue = getDefaultUiState()
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = getDefaultUiState()
     )
 
     fun onForgotPasswordClick() {
@@ -32,24 +34,28 @@ class LoginViewModel @Inject constructor(
 
     fun onEmailChange(email: String) {
         _uiState.update {
-                it.copy(
-                    email = email,
-                    isEmailChanged = true
-                )
-            }
+            it.copy(
+                email = email,
+                isEmailChanged = true
+            )
+        }
     }
 
     fun onPasswordChange(password: String) {
         _uiState.update {
-                it.copy(
-                    password = password,
-                    isPasswordChanged = true
-                )
-            }
+            it.copy(
+                password = password,
+                isPasswordChanged = true
+            )
+        }
     }
 
     fun signInClicked() {
-        _uiState.value = _uiState.value.copy(isSubmitted = true)
+        _uiState.update {
+            it.copy(
+                isSubmitted = true
+            )
+        }
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

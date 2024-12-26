@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.simform.design.appbar.AppTopAppBar
@@ -51,7 +49,8 @@ import com.simformsolutions.oneloop.ui.user.login.LoginUiState
  */
 @Composable
 fun ForgotPasswordRoute(
-    modifier: Modifier, viewModel: ForgotPasswordViewModel = hiltViewModel()
+    modifier: Modifier,
+    viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     ForgotPasswordScreen(
@@ -82,37 +81,42 @@ private fun ForgotPasswordScreen(
 ) {
     val context = LocalContext.current
 
-    AppScaffold(modifier = modifier.fillMaxWidth(), topBar = {
-        AppTopAppBar(modifier = Modifier.fillMaxWidth(),
-            containerColor = AppTheme.appColorScheme.blackColor,
-            centerContent = {
-                AppText(
-                    text = stringResource(R.string.forgot_password_title),
-                    textColor = AppTheme.appColorScheme.white
-                )
-            },
-            leadingContent = {
-                Row(
-                    modifier = Modifier
-                        .clickable {
-                            onBackClick()
-                        }
-                        .padding(start = dimensionResource(R.dimen.common_space_10), end = dimensionResource(R.dimen.common_space_5)),
-                    verticalAlignment = Alignment.CenterVertically) {
-                    AppIcon(
-                        modifier = Modifier.padding(end = dimensionResource(R.dimen.common_space_5)),
-                        painter = painterResource(
-                            id = R.drawable.icon_back_arrow
-                        )
-                    )
-
+    AppScaffold(
+        modifier = modifier,
+        topBar = {
+            AppTopAppBar(
+                containerColor = AppTheme.appColorScheme.blackColor,
+                centerContent = {
                     AppText(
-                        text = stringResource(R.string.back),
+                        text = stringResource(R.string.forgot_password_title),
                         textColor = AppTheme.appColorScheme.white
                     )
+                },
+                leadingContent = {
+                    Row(
+                        modifier = Modifier
+                        .clickable { onBackClick() }
+                        .padding(
+                            start = dimensionResource(R.dimen.common_space_small),
+                            end = dimensionResource(R.dimen.common_space_very_small)
+                        ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        AppIcon(
+                            modifier = Modifier
+                                .padding(end = dimensionResource(R.dimen.common_space_very_small)),
+                            painter = painterResource(id = R.drawable.icon_back_arrow)
+                        )
+
+                        AppText(
+                            text = stringResource(R.string.back),
+                            textColor = AppTheme.appColorScheme.white
+                        )
+                    }
                 }
-            })
-    }) { innerPadding ->
+            )
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -122,46 +126,47 @@ private fun ForgotPasswordScreen(
                 )
                 .verticalScroll(rememberScrollState())
                 .imePadding()
-                .padding(start = dimensionResource(id = R.dimen.main_contains_side_space), end = dimensionResource(id = R.dimen.main_contains_side_space)),
+                .padding(innerPadding)
+                .padding(
+                    start = dimensionResource(id = R.dimen.main_contains_side_space),
+                    end = dimensionResource(id = R.dimen.main_contains_side_space)
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             AppIcon(
-                modifier = Modifier
-                    .padding(bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)),
+                modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)),
                 painter = painterResource(id = R.drawable.icon_forgot_password)
             )
 
             AppText(
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = dimensionResource(R.dimen.common_space_10)),
+                    .padding(bottom = dimensionResource(R.dimen.common_space_small)),
                 text = stringResource(R.string.forgot_password),
                 textColor = AppTheme.appColorScheme.white,
-                style = LocalTextStyle.current.copy(
+                style = AppTheme.appTypography.h6SemiBold.copy(
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
+                    fontWeight = FontWeight.Bold
                 )
             )
 
             AppText(
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
-                    .padding(bottom = dimensionResource(R.dimen.common_space_15)),
+                    .padding(bottom = dimensionResource(R.dimen.common_space_medium)),
                 text = stringResource(R.string.note_of_forgot_password),
                 textColor = AppTheme.appColorScheme.textColor,
-                style = LocalTextStyle.current.copy(
-                    textAlign = TextAlign.Center
-                )
+                style = AppTheme.appTypography.body2Normal.copy(textAlign = TextAlign.Center)
             )
 
             // Email TextField
             AppUnderlinedTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 value = uiState.email,
-                textStyle = AppTheme.appTypography.body1Normal.copy(color = AppTheme.appColorScheme.white),
+                textStyle = AppTheme.appTypography.body1Normal.copy(
+                    color = AppTheme.appColorScheme.white
+                ),
                 supportingText = {
                     if (uiState.isValidEmailError > 0) {
                         AppText(text = stringResource(uiState.isValidEmailError), textColor = AppTheme.appColorScheme.error)
@@ -200,18 +205,23 @@ private fun ForgotPasswordScreen(
 
             // Sign Up prompt
             Row(
-                modifier = Modifier.padding(top = dimensionResource(R.dimen.common_space_10))
+                modifier = Modifier.padding(
+                    top = dimensionResource(R.dimen.common_space_small)
+                )
             ) {
                 AppText(
                     modifier = Modifier
-                        .padding(top = dimensionResource(R.dimen.common_space_10), bottom = dimensionResource(R.dimen.common_space_10)),
+                        .padding(
+                            top = dimensionResource(R.dimen.common_space_small),
+                            bottom = dimensionResource(R.dimen.common_space_small)
+                        ),
                     text = stringResource(R.string.don_t_have_an_account),
                     textColor = AppTheme.appColorScheme.textColor,
                 )
 
                 AppText(
                     modifier = Modifier
-                        .padding(dimensionResource(R.dimen.common_space_10))
+                        .padding(dimensionResource(R.dimen.common_space_small))
                         .clickable {
                             Toast.makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT).show()
                         },
@@ -228,10 +238,12 @@ private fun ForgotPasswordScreen(
 @Composable
 private fun LoginScreenPreview() {
     AppPreviewTheme {
-        ForgotPasswordScreen(modifier = Modifier.fillMaxSize(),
+        ForgotPasswordScreen(
+            modifier = Modifier.fillMaxSize(),
             uiState = ForgotPasswordUIState(),
             onEmailChange = {},
             onBackClick = {},
-            forgotPasswordClicked = {})
+            forgotPasswordClicked = {}
+        )
     }
 }

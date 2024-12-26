@@ -6,7 +6,8 @@
     <dimen name="login_and_forgot_pass_buttons_top_padding">30dp</dimen>
     <dimen name="social_media_buttons_space">16dp</dimen>
     <dimen name="social_media_buttons_size">50dp</dimen>
-    <dimen name="common_space_5">5dp</dimen>
-    <dimen name="common_space_10">10dp</dimen>
-    <dimen name="common_space_15">15dp</dimen>
+    <dimen name="common_space_very_small">5dp</dimen>
+    <dimen name="common_space_small">10dp</dimen>
+    <dimen name="common_space_medium">15dp</dimen>
+    <dimen name="social_media_login_info_space">30dp</dimen>
 </resources>

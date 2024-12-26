@@ -15,8 +15,8 @@ import com.simformsolutions.oneloop.ui.user.navigation.LoginRoute
 @Composable
 fun MainScreen() {
     AppTheme {
-        val loginViewModel: MainViewModel = hiltViewModel()
-        val navigatorController = rememberNavigatorController(loginViewModel.navigator)
+        val mainViewModel: MainViewModel = hiltViewModel()
+        val navigatorController = rememberNavigatorController(mainViewModel.navigator)
 
         AppSurface {
             NavigatorLayout(

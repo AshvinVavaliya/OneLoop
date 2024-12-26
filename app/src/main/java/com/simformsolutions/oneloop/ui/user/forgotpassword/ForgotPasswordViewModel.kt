@@ -24,7 +24,9 @@ class ForgotPasswordViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(getDefaultUiState())
 
     val uiState = _uiState.stateIn(
-        scope = viewModelScope, started = SharingStarted.Lazily, initialValue = getDefaultUiState()
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = getDefaultUiState()
     )
 
     /**
@@ -44,7 +46,11 @@ class ForgotPasswordViewModel @Inject constructor(
     }
 
     fun forgotPasswordClicked() {
-        _uiState.value = _uiState.value.copy(isSubmitted = true)
+        _uiState.update {
+            it.copy(
+                isSubmitted = true
+            )
+        }
         if (uiState.value.isValidInput) {
             //navigator.navigate(ProductRoute)
         }

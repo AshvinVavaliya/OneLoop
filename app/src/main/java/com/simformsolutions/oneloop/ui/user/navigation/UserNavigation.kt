@@ -14,8 +14,8 @@ import com.simformsolutions.oneloop.ui.user.forgotpassword.ForgotPasswordRoute
  */
 fun NavGraphBuilder.userNavigation() {
     navigation(
-            route = LoginRoute::class,
-            startDestination = Login::class
+        route = LoginRoute::class,
+        startDestination = Login::class
     ) {
         composable<Login> {
             LoginRoute(modifier = Modifier

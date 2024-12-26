@@ -19,14 +19,19 @@ data class ForgotPasswordUIState(
 ) {
     @get:StringRes
     val isValidEmailError: Int
-        get() = if (!isEmailChanged && !isSubmitted) {
-            0
-        } else if (email.isEmpty()) {
-            R.string.email_is_required_validation
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            R.string.enter_valid_email_address_validation
-        } else {
-            0
+        get() = when {
+            !isEmailChanged && !isSubmitted -> {
+                0
+            }
+            email.isEmpty() -> {
+                R.string.email_is_required_validation
+            }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                R.string.enter_valid_email_address_validation
+            }
+            else -> {
+                0
+            }
         }
 
     val isValidInput: Boolean

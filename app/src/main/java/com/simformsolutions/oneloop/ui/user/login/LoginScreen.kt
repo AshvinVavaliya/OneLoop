@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.simform.design.button.AppButton
@@ -83,13 +82,19 @@ private fun LoginScreen(
                 contentScale = ContentScale.FillBounds
             )
             .verticalScroll(rememberScrollState())
-            .padding(start = dimensionResource(id = R.dimen.main_contains_side_space), end = dimensionResource(id = R.dimen.main_contains_side_space)),
+            .padding(
+                start = dimensionResource(id = R.dimen.main_contains_side_space),
+                end = dimensionResource(id = R.dimen.main_contains_side_space)
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
 
         AppIcon(
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)),
+            modifier = Modifier
+                .padding(
+                    bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)
+                ),
             painter = painterResource(id = R.drawable.app_logo)
         )
 
@@ -170,7 +175,9 @@ private fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = dimensionResource(id = R.dimen.login_and_forgot_pass_buttons_top_padding)),
-            contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.app_bottom_content_padding)),
+            contentPadding = PaddingValues(
+                vertical = dimensionResource(id = R.dimen.app_bottom_content_padding)
+            ),
             enabled = uiState.isValidInput,
             onClick = signInClicked
         ) {
@@ -182,7 +189,7 @@ private fun LoginScreen(
 
         AppText(
             modifier = Modifier
-                .padding(30.dp),
+                .padding(dimensionResource(id = R.dimen.social_media_login_info_space)),
             text = stringResource(R.string.connect_with),
             textColor = AppTheme.appColorScheme.textColor
         )
@@ -228,14 +235,21 @@ private fun LoginScreen(
         Row {
             AppText(
                 modifier = Modifier
-                    .padding(top = dimensionResource(R.dimen.common_space_15), bottom = dimensionResource(R.dimen.common_space_10)),
+                    .padding(
+                        top = dimensionResource(R.dimen.common_space_medium),
+                        bottom = dimensionResource(R.dimen.common_space_small)
+                    ),
                 text = stringResource(R.string.don_t_have_an_account),
                 textColor = AppTheme.appColorScheme.textColor,
             )
 
             AppText(
                 modifier = Modifier
-                    .padding(start = dimensionResource(R.dimen.common_space_5), top = dimensionResource(R.dimen.common_space_15), bottom = dimensionResource(R.dimen.common_space_10))
+                    .padding(
+                        start = dimensionResource(R.dimen.common_space_very_small),
+                        top = dimensionResource(R.dimen.common_space_medium),
+                        bottom = dimensionResource(R.dimen.common_space_small)
+                    )
                     .clickable {
                         Toast.makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT).show()
                     },
@@ -251,7 +265,8 @@ private fun LoginScreen(
 @Composable
 private fun LoginScreenPreview() {
     AppPreviewTheme {
-        LoginScreen(modifier = Modifier.fillMaxSize(),
+        LoginScreen(
+            modifier = Modifier.fillMaxSize(),
             uiState = LoginUiState(),
             onForgotPasswordClick = {},
             onEmailChange = {},
