@@ -6,11 +6,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import com.simformsolutions.oneloop.ui.user.login.LoginRoute
 import com.simform.navigation.core.composable
+import com.simform.navigation.core.dialog
 import com.simform.navigation.core.navigation
 import com.simformsolutions.oneloop.ui.user.forgotpassword.ForgotPasswordRoute
 import com.simformsolutions.oneloop.ui.user.signup.optverificationpage.SignupOtpVerificationRoute
 import com.simformsolutions.oneloop.ui.user.signup.signuppassword.SignupPasswordRoute
-import com.simformsolutions.oneloop.ui.user.signup.signupphonevarification.SignupPhoneVerificationRoute
+import com.simformsolutions.oneloop.ui.user.signup.signupphoneverification.SignupPhoneVerificationRoute
+import com.simformsolutions.oneloop.ui.user.signup.signupphoneverification.countrycodeselection.CountryCodeSelectionRoute
 import com.simformsolutions.oneloop.ui.user.signup.signupuserinfo.SignupUserInfoRoute
 
 /**
@@ -65,6 +67,14 @@ fun NavGraphBuilder.userNavigation() {
             SignupOtpVerificationRoute(
                 modifier = Modifier
                     .fillMaxSize()
+                    .imePadding()
+            )
+        }
+
+        // Dialog to select country code
+        dialog<SelectCountryCode> {
+            CountryCodeSelectionRoute(
+                modifier = Modifier
                     .imePadding()
             )
         }

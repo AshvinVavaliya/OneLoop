@@ -1,7 +1,6 @@
 package com.simformsolutions.oneloop.ui.user.forgotpassword
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.simform.design.appbar.AppTopAppBar
+import com.simform.design.appbar.CommonTopAppBar
 import com.simform.design.button.AppButton
 import com.simform.design.icon.AppIcon
 import com.simform.design.scaffold.AppScaffold
@@ -59,7 +58,7 @@ fun ForgotPasswordRoute(
         uiState = uiState,
         onEmailChange = viewModel::onEmailChange,
         onBackClick = viewModel::onBackClick,
-        forgotPasswordClicked = viewModel::forgotPasswordClicked,
+        onForgotPasswordClick = viewModel::onForgotPasswordClick,
         onSignUpClick = viewModel::onSignUpClick
     )
 
@@ -79,7 +78,7 @@ private fun ForgotPasswordScreen(
     uiState: ForgotPasswordUIState,
     onBackClick: () -> Unit,
     onEmailChange: (String) -> Unit,
-    forgotPasswordClicked: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
     onSignUpClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -87,36 +86,9 @@ private fun ForgotPasswordScreen(
     AppScaffold(
         modifier = modifier,
         topBar = {
-            AppTopAppBar(
-                containerColor = AppTheme.appColorScheme.blackColor,
-                centerContent = {
-                    AppText(
-                        text = stringResource(R.string.forgot_password_title),
-                        textColor = AppTheme.appColorScheme.white
-                    )
-                },
-                leadingContent = {
-                    Row(
-                        modifier = Modifier
-                        .clickable { onBackClick() }
-                        .padding(
-                            start = dimensionResource(R.dimen.common_space_small),
-                            end = dimensionResource(R.dimen.common_space_very_small)
-                        ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AppIcon(
-                            modifier = Modifier
-                                .padding(end = dimensionResource(R.dimen.common_space_very_small)),
-                            painter = painterResource(id = R.drawable.icon_back_arrow)
-                        )
-
-                        AppText(
-                            text = stringResource(R.string.back),
-                            textColor = AppTheme.appColorScheme.white
-                        )
-                    }
-                }
+            CommonTopAppBar(
+                title = stringResource(R.string.forgot_password_title),
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -198,7 +170,7 @@ private fun ForgotPasswordScreen(
                     .padding(top = dimensionResource(id = R.dimen.login_and_forgot_pass_buttons_top_padding)),
                 enabled = uiState.isValidInput,
                 contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.app_bottom_content_padding)),
-                onClick = forgotPasswordClicked
+                onClick = onForgotPasswordClick
             ) {
                 AppText(
                     text = stringResource(R.string.btn_reset_password),
@@ -246,7 +218,7 @@ private fun LoginScreenPreview() {
             uiState = ForgotPasswordUIState(),
             onEmailChange = {},
             onBackClick = {},
-            forgotPasswordClicked = {},
+            onForgotPasswordClick = {},
             onSignUpClick = {}
         )
     }

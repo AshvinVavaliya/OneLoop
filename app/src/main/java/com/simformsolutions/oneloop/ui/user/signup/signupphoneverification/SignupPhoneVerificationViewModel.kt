@@ -1,13 +1,13 @@
-package com.simformsolutions.oneloop.ui.user.signup.signupphonevarification
+package com.simformsolutions.oneloop.ui.user.signup.signupphoneverification
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simform.navigation.Navigator
 import com.simform.navigation.core.getNavArgs
+import com.simform.navigation.getResult
 import com.simformsolutions.oneloop.ui.user.navigation.SignupOtpVerification
+import com.simformsolutions.oneloop.ui.user.navigation.SelectCountryCode
 import com.simformsolutions.oneloop.ui.user.navigation.SignupPhoneVerification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,13 +29,11 @@ class SignupPhoneVerificationViewModel @Inject constructor(
     private val navigator: Navigator
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(getDefaultUiState())
-    private val signupPhoneVerification: SignupPhoneVerification = requireNotNull(savedStateHandle.getNavArgs<SignupPhoneVerification>())
-    private val _countryCode = mutableStateOf("+1")  // Default country code
-    private val _isDialogVisible = mutableStateOf(false)  // Dialog visibility for country code selection
-    val isDialogVisible: State<Boolean> get() = _isDialogVisible  // Exposed state for dialog visibility
+    private val signupPhoneVerification: SignupPhoneVerification =
+        requireNotNull(savedStateHandle.getNavArgs<SignupPhoneVerification>())
 
     // UI state with lazy initialization
+    private val _uiState = MutableStateFlow(getDefaultUiState())
     val uiState = _uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
@@ -52,31 +50,27 @@ class SignupPhoneVerificationViewModel @Inject constructor(
     /**
      * Function to show the dialog for selecting a country code.
      */
-    fun selectCountryCode() {
-        _isDialogVisible.value = true
-    }
-
-    /**
-     * Function to update the selected country code.
-     *
-     * @param newCode The new country code selected by the user.
-     */
-    fun updateCountryCode(newCode: String) {
-        _uiState.update {
-            it.copy(
-                countryCode = newCode,
-                isCountryCodeSelected = true
-            )
+    fun onCountryCodeClick() {
+        navigator.getResult<SelectCountryCode.Result>(
+            destinationKey = SelectCountryCode.Result.KEY,
+            viewModel = this@SignupPhoneVerificationViewModel
+        ) {
+            if (this == null) return@getResult
+            _uiState.update {
+                it.copy(
+                    countryCode = this.selectedCountryCode,
+                    isCountryCodeSelected = true
+                )
+            }
         }
-        _countryCode.value = newCode
-        _isDialogVisible.value = false  // Close the dialog after updating
+        navigator.navigate(SelectCountryCode)
     }
 
     /**
      * Called when the user clicks the 'Next' button on the phone verification page.
      * Validates the inputs and navigates to the OTP verification step.
      */
-    fun onPhoneNumberVerificationPageNextClicked() {
+    fun onNextClicked() {
         _uiState.update {
             it.copy(
                 isPhoneNumberVerificationPageSubmitted = true
@@ -114,5 +108,6 @@ class SignupPhoneVerificationViewModel @Inject constructor(
     /**
      * Provides the default UI state for the phone verification page.
      */
-    private fun getDefaultUiState(): SignupPhoneVerificationUIState = SignupPhoneVerificationUIState()
+    private fun getDefaultUiState(): SignupPhoneVerificationUIState =
+        SignupPhoneVerificationUIState()
 }

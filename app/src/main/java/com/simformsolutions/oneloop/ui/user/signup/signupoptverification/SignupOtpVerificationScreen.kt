@@ -5,34 +5,28 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.simform.design.appbar.AppTopAppBar
+import com.simform.design.appbar.CommonTopAppBar
 import com.simform.design.button.AppButton
 import com.simform.design.icon.AppIcon
 import com.simform.design.scaffold.AppScaffold
 import com.simform.design.text.AppText
-import com.simform.design.textfield.AppUnderlinedTextField
+import com.simform.design.textfield.OtpTextField
 import com.simform.design.theme.AppPreviewTheme
 import com.simform.design.theme.AppTheme
 import com.simformsolutions.oneloop.R
@@ -54,8 +48,9 @@ fun SignupOtpVerificationRoute(
     SignupOtpVerificationScreen(
         modifier = modifier,
         uiState = uiState,
-        onOtpCodeChanged = viewModel::onOtpCodeChanged,
-        onOtpVerifyButtonClicked = viewModel::onOtpVerifyButtonClicked,
+        onOtpCodeChange = viewModel::onOtpCodeChange,
+        onOtpVerifyButtonClick = viewModel::onOtpVerifyButtonClick,
+        onReSendClick = viewModel::onReSendClick,
         onBackClick = viewModel::onBackClick,
     )
 
@@ -74,46 +69,17 @@ fun SignupOtpVerificationRoute(
 private fun SignupOtpVerificationScreen(
     modifier: Modifier,
     uiState: SignupOtpVerificationUIState,
-    onOtpCodeChanged: (Int, String) -> Unit,
-    onOtpVerifyButtonClicked: () -> Unit,
+    onOtpCodeChange: (String) -> Unit,
+    onOtpVerifyButtonClick: () -> Unit,
+    onReSendClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-
-    val focusRequesters = remember { List(4) { FocusRequester() } }
-
     AppScaffold(
         modifier = modifier,
         topBar = {
-            AppTopAppBar(
-                containerColor = AppTheme.appColorScheme.blackColor,
-                centerContent = {
-                    AppText(
-                        text = stringResource(R.string.verification),
-                        textColor = AppTheme.appColorScheme.white
-                    )
-                },
-                leadingContent = {
-                    Row(
-                        modifier = Modifier
-                            .clickable { onBackClick() }
-                            .padding(
-                                start = dimensionResource(R.dimen.common_space_small),
-                                end = dimensionResource(R.dimen.common_space_very_small)
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AppIcon(
-                            modifier = Modifier
-                                .padding(end = dimensionResource(R.dimen.common_space_very_small)),
-                            painter = painterResource(id = R.drawable.icon_back_arrow)
-                        )
-
-                        AppText(
-                            text = stringResource(R.string.back),
-                            textColor = AppTheme.appColorScheme.white
-                        )
-                    }
-                }
+            CommonTopAppBar(
+                title = stringResource(R.string.verification),
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -166,26 +132,15 @@ private fun SignupOtpVerificationScreen(
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.otp_fields_top_space_of_signup_page))
             ) {
-                repeat(4) { index ->
-                    AppUnderlinedTextField(
-                        modifier = Modifier
-                            .weight(1f)
-                            .focusRequester(focusRequesters[index]),
-                        value = uiState.otpValues.getOrElse(index) { "" },
-                        textStyle = AppTheme.appTypography.body1Normal.copy(
-                            color = AppTheme.appColorScheme.white,
-                            textAlign = TextAlign.Center
-                        ),
-                        onValueChange = { value ->
-                            onOtpCodeChanged(index, value)
-                        },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            keyboardType = KeyboardType.Number
-                        ),
-                        maxLines = 1
-                    )
-                }
+                OtpTextField(
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .fillMaxWidth(),
+                    otpText = uiState.otpValues,
+                    onOtpTextChange = { value, otpInputFilled ->
+                        onOtpCodeChange(value)
+                    }
+                )
             }
 
             AppButton(
@@ -195,7 +150,7 @@ private fun SignupOtpVerificationScreen(
                 contentPadding = PaddingValues(
                     vertical = dimensionResource(id = R.dimen.app_bottom_content_padding)
                 ),
-                onClick = onOtpVerifyButtonClicked
+                onClick = onOtpVerifyButtonClick
             ) {
                 AppText(
                     text = stringResource(R.string.btn_verify),
@@ -221,21 +176,12 @@ private fun SignupOtpVerificationScreen(
                             bottom = dimensionResource(R.dimen.common_space_small)
                         )
                         .clickable {
-                            // onReSendClick()
-                            // Implement resend OTP functionality
+                            onReSendClick()
                         },
                     text = stringResource(R.string.resend),
                     textColor = AppTheme.appColorScheme.white,
                 )
             }
-        }
-    }
-
-    // Handle focus logic for OTP fields
-    LaunchedEffect(uiState.otpValues) {
-        val focusedIndex = uiState.focusedIndex
-        if (focusedIndex in 0..3) {
-            focusRequesters[focusedIndex].requestFocus()
         }
     }
 }
@@ -248,8 +194,9 @@ private fun LoginScreenPreview() {
         SignupOtpVerificationScreen(
             modifier = Modifier.fillMaxSize(),
             uiState = SignupOtpVerificationUIState(),
-            onOtpCodeChanged = { _: Int, _: String -> },
-            onOtpVerifyButtonClicked = {},
+            onOtpCodeChange = { _: String -> },
+            onOtpVerifyButtonClick = {},
+            onReSendClick = {},
             onBackClick = {}
         )
     }

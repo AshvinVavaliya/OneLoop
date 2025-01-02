@@ -28,9 +28,9 @@ class SignupPasswordViewModel @Inject constructor(
     private val navigator: Navigator
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(getDefaultUiState())
     private val signupPassword: SignupPassword = requireNotNull(savedStateHandle.getNavArgs<SignupPassword>())
 
+    private val _uiState = MutableStateFlow(getDefaultUiState())
     val uiState = _uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
@@ -77,7 +77,7 @@ class SignupPasswordViewModel @Inject constructor(
      * Called when the user clicks the 'Next' button on the password page.
      * Validates inputs and navigates to the next step (Phone Verification).
      */
-    fun onPasswordNextClicked() {
+    fun onNextClick() {
         _uiState.update {
             it.copy(
                 isPasswordPageSubmitted = true

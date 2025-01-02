@@ -117,7 +117,7 @@ class SignupUserInfoViewModel @Inject constructor(
      * Called when the user wants to pick an image for the avatar.
      * TODO: Implement the logic for image picking.
      */
-    fun pickImage() {
+    fun onPickImageClick() {
         // Placeholder for the image picking logic
     }
 

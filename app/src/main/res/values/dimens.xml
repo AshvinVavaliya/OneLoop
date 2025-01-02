@@ -10,9 +10,12 @@
     <dimen name="common_space_small">10dp</dimen>
     <dimen name="common_space_medium">15dp</dimen>
     <dimen name="common_space_large">20dp</dimen>
+    <dimen name="common_space_extra_large">25dp</dimen>
     <dimen name="social_media_login_info_space">30dp</dimen>
-    <dimen name="pick_avatar_end_space">25dp</dimen>
+    <dimen name="pick_avatar_end_space">15dp</dimen>
     <dimen name="pick_avatar_bottom_space">15dp</dimen>
     <dimen name="phone_number_top_space_of_signup_page">15dp</dimen>
     <dimen name="otp_fields_top_space_of_signup_page">40dp</dimen>
+    <dimen name="avatar_box_width">140dp</dimen>
+    <dimen name="avatar_box_height">110dp</dimen>
 </resources>

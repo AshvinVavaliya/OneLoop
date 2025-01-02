@@ -11,8 +11,7 @@ import androidx.compose.runtime.Stable
 @Stable
 @Immutable
 data class SignupOtpVerificationUIState(
-    val countryCodeList: List<String> = listOf("+1", "+44", "+91", "+61", "+81", "+49"), // List of country codes (It will update in future)
-    val otpValues: List<String> = List(4) { "" },
+    val otpValues: String = "",
     val focusedIndex: Int = 0,
 ) {
     // do validation related stuff

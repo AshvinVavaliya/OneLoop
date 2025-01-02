@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.simform.design.appbar.AppTopAppBar
+import com.simform.design.appbar.CommonTopAppBar
 import com.simform.design.button.AppButton
 import com.simform.design.icon.AppIcon
 import com.simform.design.scaffold.AppScaffold
@@ -50,7 +50,7 @@ fun SignupUserInfoRoute(
         onFirstNameChange = viewModel::onFirstNameChange,
         onLastNameChange = viewModel::onLastNameChange,
         onUserInfoNextClicked = viewModel::onUserInfoPageNextClicked,
-        pickImage = viewModel::pickImage,
+        onPickImageClick = viewModel::onPickImageClick,
         onSignInClick = viewModel::onSignInClick
     )
 
@@ -74,42 +74,15 @@ private fun SignupUserInfoScreen(
     onFirstNameChange: (String) -> Unit,
     onLastNameChange: (String) -> Unit,
     onUserInfoNextClicked: () -> Unit,
-    pickImage: () -> Unit,
+    onPickImageClick: () -> Unit,
     onSignInClick: () -> Unit
 ) {
     AppScaffold(
         modifier = modifier,
         topBar = {
-            AppTopAppBar(
-                containerColor = AppTheme.appColorScheme.blackColor,
-                centerContent = {
-                    AppText(
-                        text = stringResource(R.string.sign_up),
-                        textColor = AppTheme.appColorScheme.white
-                    )
-                },
-                leadingContent = {
-                    Row(
-                        modifier = Modifier
-                            .clickable { onBackClick() }
-                            .padding(
-                                start = dimensionResource(R.dimen.common_space_small),
-                                end = dimensionResource(R.dimen.common_space_very_small)
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AppIcon(
-                            modifier = Modifier
-                                .padding(end = dimensionResource(R.dimen.common_space_very_small)),
-                            painter = painterResource(id = R.drawable.icon_back_arrow)
-                        )
-
-                        AppText(
-                            text = stringResource(R.string.back),
-                            textColor = AppTheme.appColorScheme.white
-                        )
-                    }
-                }
+            CommonTopAppBar(
+                title = stringResource(R.string.sign_up),
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -132,43 +105,39 @@ private fun SignupUserInfoScreen(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(
                         bottom = dimensionResource(id = R.dimen.app_icons_bottom_space)
+                    )
+                    .size(
+                        width = dimensionResource(id = R.dimen.avatar_box_width),
+                        height = dimensionResource(id = R.dimen.avatar_box_height)
                     ),
+                contentAlignment = Alignment.Center
             ) {
                 AppIcon(
                     modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(dimensionResource(id = R.dimen.common_space_large)),
+                        .padding(bottom = dimensionResource(id = R.dimen.common_space_small))
+                        .matchParentSize(),
                     painter = painterResource(id = R.drawable.icon_avatar_border)
                 )
 
-                Box(
+                AppIcon(
                     modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .padding(
-                            top = dimensionResource(id = R.dimen.common_space_medium)
-                        )
-                ) {
-                    AppIcon(
-                        modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(dimensionResource(id = R.dimen.common_space_large)),
-                        painter = painterResource(id = R.drawable.icon_avatar)
-                    )
+                        .matchParentSize()
+                        .padding(top = dimensionResource(id = R.dimen.common_space_medium),),
+                    painter = painterResource(id = R.drawable.icon_avatar)
+                )
 
-                    AppIcon(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(
-                                end = dimensionResource(id = R.dimen.pick_avatar_end_space),
-                                bottom = dimensionResource(id = R.dimen.pick_avatar_bottom_space)
-                            )
-                            .clickable { pickImage() },
-                        painter = painterResource(id = R.drawable.icon_pick_avatar)
-                    )
-                }
+                AppIcon(
+                    modifier = Modifier
+                        .padding(
+                            end = dimensionResource(id = R.dimen.common_space_extra_large),
+                            top = dimensionResource(id = R.dimen.common_space_large)
+                        )
+                        .align(Alignment.BottomEnd)
+                        .clickable { onPickImageClick() },
+                    painter = painterResource(id = R.drawable.icon_pick_avatar)
+                )
             }
 
             AppUnderlinedTextField(
@@ -299,7 +268,11 @@ private fun SignupUserInfoScreen(
 
                 AppText(
                     modifier = Modifier
-                        .padding(start = dimensionResource(R.dimen.common_space_very_small), top = dimensionResource(R.dimen.common_space_medium), bottom = dimensionResource(R.dimen.common_space_small))
+                        .padding(
+                            start = dimensionResource(R.dimen.common_space_very_small),
+                            top = dimensionResource(R.dimen.common_space_medium),
+                            bottom = dimensionResource(R.dimen.common_space_small)
+                        )
                         .clickable {
                             onSignInClick()
                         },
@@ -324,7 +297,7 @@ private fun LoginScreenPreview() {
             onLastNameChange = {},
             onBackClick = {},
             onUserInfoNextClicked = {},
-            pickImage = {},
+            onPickImageClick = {},
             onSignInClick = {}
         )
     }

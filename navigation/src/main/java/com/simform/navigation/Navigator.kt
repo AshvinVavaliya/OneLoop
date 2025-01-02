@@ -223,3 +223,4 @@ inline fun <reified T> Navigator.getResult(
 inline fun <reified T> Navigator.navigateUpWithResult(key: String, result: T, destination: Any? = null) {
     navigateUpWithResult(key = key, result = Json.encodeToString(result), destination = destination)
 }
+

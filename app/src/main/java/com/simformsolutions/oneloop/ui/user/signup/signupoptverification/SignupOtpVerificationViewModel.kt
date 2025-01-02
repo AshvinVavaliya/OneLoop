@@ -26,10 +26,10 @@ class SignupOtpVerificationViewModel @Inject constructor(
     private val navigator: Navigator
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(getDefaultUiState())
     private val signupOTPVerification: SignupOtpVerification =
         requireNotNull(savedStateHandle.getNavArgs<SignupOtpVerification>())
 
+    private val _uiState = MutableStateFlow(getDefaultUiState())
     val uiState = _uiState.stateIn(
         scope = viewModelScope,
         started = SharingStarted.Lazily,
@@ -49,51 +49,23 @@ class SignupOtpVerificationViewModel @Inject constructor(
      * @param index Index of the OTP field being modified.
      * @param value The new value entered by the user.
      */
-    fun onOtpCodeChanged(index: Int, value: String) {
-        if (value.length <= 1) {
-            val newOtpValues = _uiState.value.otpValues.toMutableList()
-            newOtpValues[index] = value
-            _uiState.update {
-                it.copy(
-                    otpValues = newOtpValues,
-                    focusedIndex = index
-                )
-            }
-            moveToNextField(index, value)
-        }
-    }
-
-    /**
-     * Moves the focus to the next or previous OTP input field.
-     *
-     * @param index Current field index.
-     * @param value The value of the current OTP field.
-     */
-    private fun moveToNextField(index: Int, value: String) {
-        val otpValues = _uiState.value.otpValues
-        when {
-            value.isNotEmpty() && index < otpValues.size - 1 -> {
-                _uiState.update {
-                    it.copy(
-                        focusedIndex = index + 1
-                    )
-                }
-            }
-            value.isEmpty() && index > 0 -> {
-                _uiState.update {
-                    it.copy(
-                        focusedIndex = index - 1
-                    )
-                }
-            }
+    fun onOtpCodeChange(value: String) {
+        _uiState.update {
+            it.copy(
+                otpValues = value
+            )
         }
     }
 
     /**
      * Handles OTP verification button click.
      */
-    fun onOtpVerifyButtonClicked() {
+    fun onOtpVerifyButtonClick() {
         // Navigate to Walkthrough screen or perform OTP verification
+    }
+
+    fun onReSendClick() {
+        // Resend OTP
     }
 
     /**

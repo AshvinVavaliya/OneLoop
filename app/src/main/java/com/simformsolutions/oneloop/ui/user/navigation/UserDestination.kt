@@ -26,6 +26,18 @@ data class SignupPhoneVerification(
 )
 
 @Serializable
+data object SelectCountryCode {
+    @Serializable
+    data class Result(
+        val selectedCountryCode: String,
+    ) {
+        companion object {
+            const val KEY = "SELECTED_COUNTRY_CODE_RESULT_KEY"
+        }
+    }
+}
+
+@Serializable
 data class SignupOtpVerification(
     val signupUserData: SignUpUserData
 )

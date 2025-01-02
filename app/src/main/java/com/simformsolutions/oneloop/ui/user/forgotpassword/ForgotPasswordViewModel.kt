@@ -46,7 +46,7 @@ class ForgotPasswordViewModel @Inject constructor(
         }
     }
 
-    fun forgotPasswordClicked() {
+    fun onForgotPasswordClick() {
         _uiState.update {
             it.copy(
                 isSubmitted = true

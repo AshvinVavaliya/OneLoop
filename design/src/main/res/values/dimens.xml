@@ -10,4 +10,6 @@
     <dimen name="progress_indicator_size">40dp</dimen>
     <dimen name="default_spacing">8dp</dimen>
     <dimen name="app_bar_padding">16dp</dimen>
+    <dimen name="common_space_small">10dp</dimen>
+    <dimen name="common_space_very_small">5dp</dimen>
 </resources>

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.simform.design.appbar.AppTopAppBar
+import com.simform.design.appbar.CommonTopAppBar
 import com.simform.design.button.AppButton
 import com.simform.design.icon.AppIcon
 import com.simform.design.scaffold.AppScaffold
@@ -49,7 +49,7 @@ fun SignupPasswordRoute(
         uiState = uiState,
         onPasswordChange = viewModel::onPasswordChange,
         onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
-        onPasswordNextClicked = viewModel::onPasswordNextClicked,
+        onNextClick = viewModel::onNextClick,
         onBackClick = viewModel::onBackClick,
         onSignInClick = viewModel::onSignInClick
     )
@@ -71,45 +71,16 @@ private fun SignupPasswordScreen(
     uiState: SignupPasswordUIState,
     onPasswordChange: (String) -> Unit,
     onConfirmPasswordChange: (String) -> Unit,
-    onPasswordNextClicked: () -> Unit,
+    onNextClick: () -> Unit,
     onBackClick: () -> Unit,
     onSignInClick: () -> Unit
 ) {
     AppScaffold(
         modifier = modifier,
         topBar = {
-            AppTopAppBar(
-                containerColor = AppTheme.appColorScheme.blackColor,
-                centerContent = {
-                    AppText(
-                        text = stringResource(R.string.sign_up),
-                        textColor = AppTheme.appColorScheme.white
-                    )
-                },
-                leadingContent = {
-                    Row(
-                        modifier = Modifier
-                            .clickable { onBackClick() }
-                            .padding(
-                                start = dimensionResource(R.dimen.common_space_small),
-                                end = dimensionResource(R.dimen.common_space_very_small)
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AppIcon(
-                            modifier = Modifier
-                                .padding(
-                                    end = dimensionResource(R.dimen.common_space_very_small)
-                                ),
-                            painter = painterResource(id = R.drawable.icon_back_arrow)
-                        )
-
-                        AppText(
-                            text = stringResource(R.string.back),
-                            textColor = AppTheme.appColorScheme.white
-                        )
-                    }
-                }
+            CommonTopAppBar(
+                title = stringResource(R.string.sign_up),
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -237,7 +208,7 @@ private fun SignupPasswordScreen(
                     vertical = dimensionResource(id = R.dimen.common_space_medium)
                 ),
                 enabled = uiState.isValidInputOfPasswordPage,
-                onClick = onPasswordNextClicked
+                onClick = onNextClick
             ) {
                 AppText(
                     text = stringResource(R.string.btn_next),
@@ -283,7 +254,7 @@ private fun LoginScreenPreview() {
             uiState = SignupPasswordUIState(),
             onPasswordChange = {},
             onConfirmPasswordChange = {},
-            onPasswordNextClicked = {},
+            onNextClick = {},
             onBackClick = {},
             onSignInClick = {}
         )
