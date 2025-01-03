@@ -11,8 +11,7 @@ import androidx.compose.runtime.Stable
 @Stable
 @Immutable
 data class SignupOtpVerificationUIState(
-    val otpValues: String = "",
-    val focusedIndex: Int = 0,
+    val otpValues: String = ""
 ) {
     // do validation related stuff
 }

@@ -92,7 +92,6 @@ private fun SignupPasswordScreen(
                     contentScale = ContentScale.FillBounds
                 )
                 .verticalScroll(rememberScrollState())
-                .imePadding()
                 .padding(innerPadding)
                 .padding(
                     start = dimensionResource(id = R.dimen.main_contains_side_space),

@@ -27,7 +27,6 @@ fun NavGraphBuilder.userNavigation() {
             LoginRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -35,7 +34,6 @@ fun NavGraphBuilder.userNavigation() {
             ForgotPasswordRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -43,7 +41,6 @@ fun NavGraphBuilder.userNavigation() {
             SignupUserInfoRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -51,7 +48,6 @@ fun NavGraphBuilder.userNavigation() {
             SignupPasswordRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -59,7 +55,6 @@ fun NavGraphBuilder.userNavigation() {
             SignupPhoneVerificationRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -67,7 +62,6 @@ fun NavGraphBuilder.userNavigation() {
             SignupOtpVerificationRoute(
                 modifier = Modifier
                     .fillMaxSize()
-                    .imePadding()
             )
         }
 
@@ -75,7 +69,6 @@ fun NavGraphBuilder.userNavigation() {
         dialog<SelectCountryCode> {
             CountryCodeSelectionRoute(
                 modifier = Modifier
-                    .imePadding()
             )
         }
     }

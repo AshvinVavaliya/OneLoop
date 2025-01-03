@@ -91,7 +91,6 @@ private fun SignupOtpVerificationScreen(
                     contentScale = ContentScale.FillBounds
                 )
                 .verticalScroll(rememberScrollState())
-                .imePadding()
                 .padding(innerPadding)
                 .padding(
                     start = dimensionResource(id = R.dimen.main_contains_side_space),
@@ -125,23 +124,15 @@ private fun SignupOtpVerificationScreen(
                 style = MaterialTheme.typography.subtitle1.copy(textAlign = TextAlign.Center)
             )
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.common_space_small)),
-                verticalAlignment = Alignment.CenterVertically,
+            OtpTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.otp_fields_top_space_of_signup_page))
-            ) {
-                OtpTextField(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .fillMaxWidth(),
-                    otpText = uiState.otpValues,
-                    onOtpTextChange = { value, otpInputFilled ->
-                        onOtpCodeChange(value)
-                    }
-                )
-            }
+                    .fillMaxWidth(),
+                otpText = uiState.otpValues,
+                onOtpTextChange = { value, otpInputFilled ->
+                    onOtpCodeChange(value)
+                }
+            )
 
             AppButton(
                 modifier = Modifier

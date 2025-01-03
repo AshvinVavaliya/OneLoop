@@ -94,7 +94,6 @@ private fun SignupUserInfoScreen(
                     painter = painterResource(id = R.drawable.img_login_bg),
                     contentScale = ContentScale.FillBounds
                 )
-                .imePadding()
                 .padding(innerPadding)
                 .padding(
                     start = dimensionResource(id = R.dimen.main_contains_side_space),

@@ -16,19 +16,14 @@ import com.simform.design.theme.AppTheme
 
 @Composable
 fun CommonTopAppBar(
+    modifier: Modifier = Modifier,
     title: String,
-    onBackClick: () -> Unit,
     showBackButton: Boolean = true, // Add option to show/hide the back button
-    modifier: Modifier = Modifier
+    onBackClick: () -> Unit
 ) {
     AppTopAppBar(
+        modifier = modifier,
         containerColor = AppTheme.appColorScheme.blackColor,
-        centerContent = {
-            AppText(
-                text = title,
-                textColor = AppTheme.appColorScheme.white
-            )
-        },
         leadingContent = {
             if (showBackButton) {
                 Row(
@@ -55,6 +50,11 @@ fun CommonTopAppBar(
                 }
             }
         },
-        modifier = modifier
+        centerContent = {
+            AppText(
+                text = title,
+                textColor = AppTheme.appColorScheme.white
+            )
+        }
     )
 }

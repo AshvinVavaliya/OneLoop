@@ -15,7 +15,7 @@
     <dimen name="pick_avatar_end_space">15dp</dimen>
     <dimen name="pick_avatar_bottom_space">15dp</dimen>
     <dimen name="phone_number_top_space_of_signup_page">15dp</dimen>
-    <dimen name="otp_fields_top_space_of_signup_page">40dp</dimen>
+    <dimen name="otp_fields_top_space_of_signup_page">30dp</dimen>
     <dimen name="avatar_box_width">140dp</dimen>
     <dimen name="avatar_box_height">110dp</dimen>
 </resources>
