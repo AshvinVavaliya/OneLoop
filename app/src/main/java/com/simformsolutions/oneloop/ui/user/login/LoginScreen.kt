@@ -55,7 +55,8 @@ fun LoginRoute(
         onForgotPasswordClick = viewModel::onForgotPasswordClick,
         onEmailChange = viewModel::onEmailChange,
         onPasswordChange = viewModel::onPasswordChange,
-        signInClicked = viewModel::signInClicked
+        signInClicked = viewModel::signInClicked,
+        onSignUpClick = viewModel::onSignUpClick
     )
 }
 
@@ -72,7 +73,8 @@ private fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    signInClicked: () -> Unit
+    signInClicked: () -> Unit,
+    onSignUpClick: () -> Unit
 ) {
     val context = LocalContext.current
     Column(
@@ -251,7 +253,7 @@ private fun LoginScreen(
                         bottom = dimensionResource(R.dimen.common_space_small)
                     )
                     .clickable {
-                        Toast.makeText(context, "Sign Up Clicked", Toast.LENGTH_SHORT).show()
+                        onSignUpClick()
                     },
                 text = stringResource(R.string.sign_up),
                 textColor = AppTheme.appColorScheme.white,
@@ -271,6 +273,8 @@ private fun LoginScreenPreview() {
             onForgotPasswordClick = {},
             onEmailChange = {},
             onPasswordChange = {},
-            signInClicked = {})
+            signInClicked = {},
+            onSignUpClick = {}
+        )
     }
 }

@@ -1,28 +1,39 @@
 package com.simform.design.textfield
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.simform.design.R
 import com.simform.design.text.AppText
 import com.simform.design.theme.AppPreviewTheme
 import com.simform.design.theme.AppTheme
@@ -153,7 +164,7 @@ private fun AppBaseUnderlinedTextField(
  * @param onValueChange Called when the value changes.
  */
 @Composable
-fun AppUnderlinedTextField(
+fun AppUnderlinedPasswordTextField(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
@@ -179,9 +190,17 @@ fun AppUnderlinedTextField(
     suffix: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
     contentPadding: PaddingValues = PaddingValues(),
-    onValueChange: (String) -> Unit,
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    onValueChange: (String) -> Unit
 ) {
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    // Choose correct drawable resource based on visibility state
+    val visibilityIcon: Painter = if (passwordVisible) {
+        painterResource(id = R.drawable.icon_password_visible_eye)  // Use your own drawable resource
+    } else {
+        painterResource(id = R.drawable.icon_password_hide_eye)  // Use your own drawable resource
+    }
+
     AppBaseUnderlinedTextField(
         modifier = modifier,
         value = value,
@@ -189,22 +208,31 @@ fun AppUnderlinedTextField(
         enabled = enabled,
         readOnly = readOnly,
         textStyle = textStyle,
-        visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions.copy(
+            keyboardType = if (passwordVisible) KeyboardType.Text else KeyboardType.Password
+        ),
+        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                Image(
+                    painter = visibilityIcon,
+                    contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                    modifier = Modifier.size(24.dp) // Adjust the size of the icon if needed
+                )
+            }
+        },
         minLines = minLines,
         maxLines = maxLines,
         label = label,
         placeholder = placeholder,
         leadingIcon = leadingIcon,
-        trailingIcon = trailingIcon,
         prefix = prefix,
         suffix = suffix,
         supportingText = supportingText,
         isError = isError,
         singleLine = singleLine,
-        keyboardOptions = keyboardOptions,
         colors = colors,
-        contentPadding = contentPadding,
-        keyboardActions = keyboardActions
+        contentPadding = contentPadding
     )
 }
 
@@ -215,7 +243,7 @@ fun AppUnderlinedTextField(
 @Composable
 private fun AppUnderlinedInputFieldPreview() {
     AppPreviewTheme {
-        AppUnderlinedTextField(
+        AppUnderlinedPasswordTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
