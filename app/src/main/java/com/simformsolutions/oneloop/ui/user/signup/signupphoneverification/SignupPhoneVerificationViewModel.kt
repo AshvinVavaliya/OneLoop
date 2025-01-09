@@ -70,7 +70,7 @@ class SignupPhoneVerificationViewModel @Inject constructor(
      * Called when the user clicks the 'Next' button on the phone verification page.
      * Validates the inputs and navigates to the OTP verification step.
      */
-    fun onNextClicked() {
+    fun onNextClick() {
         _uiState.update {
             it.copy(
                 isPhoneNumberVerificationPageSubmitted = true

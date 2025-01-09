@@ -56,7 +56,7 @@ fun SignupPhoneVerificationRoute(
         uiState = uiState,
         onPhoneNumberChange = viewModel::onPhoneNumberChange,
         onCountryCodeClick = viewModel::onCountryCodeClick,
-        onNextClicked = viewModel::onNextClicked,
+        onNextClick = viewModel::onNextClick,
         onBackClick = viewModel::onBackClick
     )
 
@@ -71,7 +71,7 @@ private fun SignupPhoneVerificationScreen(
     uiState: SignupPhoneVerificationUIState,
     onPhoneNumberChange: (String) -> Unit,
     onCountryCodeClick: () -> Unit,
-    onNextClicked: () -> Unit,
+    onNextClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
     AppScaffold(
@@ -160,7 +160,7 @@ private fun SignupPhoneVerificationScreen(
                     .padding(top = dimensionResource(id = R.dimen.login_and_forgot_pass_buttons_top_padding)),
                 contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.common_space_medium)),
                 enabled = uiState.isValidInputOfPhoneNumberVerificationPage,
-                onClick = onNextClicked
+                onClick = onNextClick
             ) {
                 AppText(
                     text = stringResource(R.string.btn_next),
@@ -181,7 +181,7 @@ private fun LoginScreenPreview() {
             uiState = SignupPhoneVerificationUIState(),
             onPhoneNumberChange = {},
             onCountryCodeClick = {},
-            onNextClicked = {},
+            onNextClick = {},
             onBackClick = {}
         )
     }
