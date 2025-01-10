@@ -41,3 +41,6 @@ data object SelectCountryCode {
 data class SignupOtpVerification(
     val signupUserData: SignUpUserData
 )
+
+@Serializable
+data object UserWalkthrough

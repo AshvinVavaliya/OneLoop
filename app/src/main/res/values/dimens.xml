@@ -18,4 +18,7 @@
     <dimen name="otp_fields_top_space_of_signup_page">30dp</dimen>
     <dimen name="avatar_box_width">140dp</dimen>
     <dimen name="avatar_box_height">110dp</dimen>
+    <dimen name="walkthrough_buttons_padding">30dp</dimen>
+    <dimen name="app_icons_bottom_space_for_walkthrough_screen">70dp</dimen>
+    <dimen name="main_contains_side_space_of_walkthrough_screen">30dp</dimen>
 </resources>

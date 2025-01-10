@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.simform.navigation.Navigator
 import com.simformsolutions.oneloop.ui.user.navigation.ForgotPassword
 import com.simformsolutions.oneloop.ui.user.navigation.SignupUserInfo
+import com.simformsolutions.oneloop.ui.user.navigation.UserWalkthrough
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,7 +59,7 @@ class LoginViewModel @Inject constructor(
             )
         }
         if (uiState.value.isValidInput) {
-            //navigator.navigate(ProductRoute)
+            navigator.navigate(UserWalkthrough)
         }
     }
 
