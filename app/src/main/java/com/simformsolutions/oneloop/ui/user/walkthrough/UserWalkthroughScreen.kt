@@ -57,7 +57,7 @@ private fun UserWalkthroughScreen(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .background(color = colorResource(id = R.color.black))
+            .background(color = AppTheme.appColorScheme.blackColor)
             .imePadding()
             .padding(
                 start = dimensionResource(id = R.dimen.main_contains_side_space_of_walkthrough_screen),
