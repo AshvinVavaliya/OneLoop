@@ -14,6 +14,7 @@ import com.simformsolutions.oneloop.ui.user.signup.signuppassword.SignupPassword
 import com.simformsolutions.oneloop.ui.user.signup.signupphoneverification.SignupPhoneVerificationRoute
 import com.simformsolutions.oneloop.ui.user.signup.signupphoneverification.countrycodeselection.CountryCodeSelectionRoute
 import com.simformsolutions.oneloop.ui.user.signup.signupuserinfo.SignupUserInfoRoute
+import com.simformsolutions.oneloop.ui.user.walkthrough.UserWalkthroughRoute
 
 /**
  * The user nav graph.
@@ -69,6 +70,14 @@ fun NavGraphBuilder.userNavigation() {
         dialog<SelectCountryCode> {
             CountryCodeSelectionRoute(
                 modifier = Modifier
+            )
+        }
+
+        composable<UserWalkthrough> {
+            UserWalkthroughRoute(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .imePadding()
             )
         }
     }

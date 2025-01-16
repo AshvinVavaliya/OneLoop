@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.simform.navigation.Navigator
 import com.simform.navigation.core.getNavArgs
 import com.simformsolutions.oneloop.ui.user.navigation.SignupOtpVerification
+import com.simformsolutions.oneloop.ui.user.navigation.UserWalkthrough
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -61,7 +62,7 @@ class SignupOtpVerificationViewModel @Inject constructor(
      * Handles OTP verification button click.
      */
     fun onOtpVerifyButtonClick() {
-        // Navigate to Walkthrough screen or perform OTP verification
+        navigator.navigate(UserWalkthrough)
     }
 
     fun onReSendClick() {
